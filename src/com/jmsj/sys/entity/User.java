@@ -8,12 +8,15 @@ import org.activiti.engine.impl.persistence.entity.UserEntity;
 import com.jmsj.sys.annotation.Column;
 import com.jmsj.sys.annotation.Entity;
 import com.jmsj.sys.annotation.Id;
-@Entity(name="tb_user")
+import com.jmsj.sys.annotation.Table;
+@Entity
+@Table("tb_user")
 public class User extends UserEntity{
 
 	private static final long serialVersionUID = 1L;
 	
-	@Id(name="userId",length=40)
+	@Id
+	@Column(name="userId",length=40)
 	private String userId;
 	@Column(name="userName",length=100)
     private String userName;

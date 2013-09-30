@@ -3,12 +3,15 @@ package com.jmsj.sys.entity;
 import com.jmsj.sys.annotation.Column;
 import com.jmsj.sys.annotation.Entity;
 import com.jmsj.sys.annotation.Id;
+import com.jmsj.sys.annotation.Table;
 
 //角色表
-@Entity(name="tb_role")
+@Entity
+@Table("tb_role")
 public class Role {
 	//角色id
-	@Id(name="roleId",length=40)
+	@Id
+	@Column(name="roleId",length=40)
 	private String roleId;
 	//角色名称
 	@Column(name="roleName",length=100)

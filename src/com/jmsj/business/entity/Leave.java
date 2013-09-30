@@ -5,16 +5,19 @@ import java.util.Date;
 import com.jmsj.sys.annotation.Column;
 import com.jmsj.sys.annotation.Entity;
 import com.jmsj.sys.annotation.Id;
+import com.jmsj.sys.annotation.Table;
 
 /**
  * 请假实体类
  * @author JQ
  * @since 2013-09-01
  */
-@Entity(name="tb_leave")
+@Entity
+@Table("tb_leave")
 public class Leave {
 	
-	@Id(name="lid",length=40)
+	@Id
+	@Column(name="lid",length=40)
 	private String lid;//主键
 	@Column(name="createDate",length=6)
 	private Date createDate;//创建时间

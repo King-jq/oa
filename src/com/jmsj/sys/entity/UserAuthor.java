@@ -3,12 +3,15 @@ package com.jmsj.sys.entity;
 import com.jmsj.sys.annotation.Column;
 import com.jmsj.sys.annotation.Entity;
 import com.jmsj.sys.annotation.Id;
+import com.jmsj.sys.annotation.Table;
 
 //用户权限表
-@Entity(name="tb_user_author")
+@Entity
+@Table("tb_user_author")
 public class UserAuthor {
 	
-	@Id(name="uaId",length=40)
+	@Id
+	@Column(name="uaId",length=40)
 	private String uaId;
 	@Column(name="userId",length=40)
 	private String userId;

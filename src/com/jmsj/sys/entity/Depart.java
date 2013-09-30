@@ -8,13 +8,16 @@ import org.activiti.engine.identity.Group;
 import com.jmsj.sys.annotation.Column;
 import com.jmsj.sys.annotation.Entity;
 import com.jmsj.sys.annotation.Id;
+import com.jmsj.sys.annotation.Table;
 
-@Entity(name="tb_depart")
+@Entity
+@Table("tb_depart")
 public class Depart implements Group{
 	
 	private static final long serialVersionUID = 1L;
 	
-	@Id(name="departId",length=40)
+	@Id
+	@Column(name="departId",length=40)
 	private String departId;
 	@Column(name="departPid",length=40)
     private String departPid;

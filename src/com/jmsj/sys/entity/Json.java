@@ -1,5 +1,10 @@
 package com.jmsj.sys.entity;
 
+/**
+ * json返回值
+ * @author JQ88
+ *
+ */
 public class Json {
 	private boolean state;
 	private Object object;
