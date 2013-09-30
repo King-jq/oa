@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"          
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jmsj.sys.dao.IUserAuthorDao">
+	<parameterMap type="com.jmsj.sys.entity.UserAuthor" id="parameterUserAuthorMap">
+		<parameter property="uaId" />
+		<parameter property="userId" />
+		<parameter property="authId" />
+	</parameterMap>
+
+	<resultMap type="com.jmsj.sys.entity.UserAuthor" id="resultUserAuthorMap">
+		<result property="uaId" column="uaId" />
+		<result property="userId" column="userId" />
+		<result property="authId" column="authId" />
+	</resultMap>
+
+	<resultMap type="com.jmsj.sys.entity.Author" id="resultAuthorMap">
+		<result property="authId" column="authId" />
+		<result property="authName" column="authName" />
+		<result property="methodName" column="methodName" />
+		<result property="className" column="className" />
+	</resultMap>
+	
+	<insert id="add" parameterMap="parameterUserAuthorMap">
+	  insert into tb_user_author(uaId, userId, authId) value(?,?,?)
+	</insert>
+	
+	<update id="update" parameterMap="parameterUserAuthorMap">
+	  update tb_user_author set userId=#{userId}, authId=#{authId} where uaId=#{uaId}
+	</update>
+	
+	<delete id="deleteById" parameterType="String">
+	  delete from tb_user_author where id =#{value}
+	</delete>
+	
+	<delete id="deleteByUserId" parameterType="String">
+	 delete from tb_user_author where userId=#{value}
+	</delete>
+	
+	<delete id="deleteByAuthorId" parameterType="String">
+	 delete from tb_user_author where authId=#{value}
+	</delete>
+	
+	<select id="getUserAuthor" parameterType="String" resultMap="resultUserAuthorMap">
+	  select * from tb_user_author where id=#{value}
+	</select>
+	
+	<select id="findAuthorsByUserId" parameterType="String" resultMap="resultAuthorMap">
+	  select a.* from tb_author a, tb_user_author u where u.authId = a.authId and u.userId=#{value}
+	</select>
+	
+	<select id="findAuthorsByUserAndRole" parameterType="String" resultMap="resultAuthorMap">
+	select a.* from tb_author a, tb_user_author u where u.authId = a.authId and u.userId=#{value}
+	 union
+	select a.* from tb_author a, tb_role_author r, tb_user_role u where a.authId = r.authId and r.roleId = u.roleId and u.userId=#{value}
+	</select>
+
+</mapper>

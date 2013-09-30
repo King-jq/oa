@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"          
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jmsj.business.dao.ILeaveDao">
+    <parameterMap type="com.jmsj.business.entity.Leave" id="parameterMap">
+        <parameter property="lid"/>
+        <parameter property="createDate"/>
+        <parameter property="startDate"/>
+        <parameter property="endDate"/>
+        <parameter property="userId"/>
+        <parameter property="cause"/>
+        <parameter property="isEnd"/>
+        <parameter property="proId"/>
+    </parameterMap>
+    
+    <resultMap type="com.jmsj.business.entity.Leave" id="resultMap">
+        <result column="lid" property="lid"/>
+        <result column="createDate" property="createDate"/>
+        <result column="startDate" property="startDate"/>
+        <result column="endDate" property="endDate"/>
+        <result column="userId" property="userId"/>
+        <result column="cause" property="cause"/>
+        <result column="isEnd" property="isEnd"/>
+        <result column="proId" property="proId"/>
+    </resultMap>
+    
+    <insert id="save" parameterMap="parameterMap">
+        insert into tb_leave(lid, createDate, startDate, endDate, userId, cause, isEnd, proId)values(?,?,?,?,?,?,?,?)
+    </insert>
+    
+    <delete id="delete" parameterType="String">
+        delete from tb_leave where lid=#{value}
+    </delete>
+    
+    <update id="update" parameterMap="parameterMap">
+        update tb_leave set startDate=#{startDate}, endDate=#{endDate}, cause=#{cause} where lid=#{lid}
+    </update>
+    
+    <update id="setEnd" parameterType="String">
+        update tb_leave set isEnd =1 where lid=#{value}
+    </update>
+    
+    <select id="getLeaveById" resultMap="resultMap" parameterType="String">
+        select * from tb_leave where lid=#{value}
+    </select>
+    
+    <select id="findLeaveByUser" resultMap="resultMap" parameterMap="parameterMap">
+        select * from tb_leave where userId=#{userId}
+        <if test="isEnd == 0">
+            and isEnd = #{isEnd} order by createDate desc
+        </if>
+        <if test="isEnd == 1">
+            and isEnd = #{isEnd} order by createDate desc
+        </if>
+        <if test="isEnd == -1">
+            order by isEnd asc 
+        </if>
+    </select>
+</mapper>

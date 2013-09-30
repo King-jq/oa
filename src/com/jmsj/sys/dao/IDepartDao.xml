@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"          
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jmsj.sys.dao.IDepartDao">
+	<parameterMap type="com.jmsj.sys.entity.Depart" id="parameterMap">
+		<parameter property="departId" />
+		<parameter property="departPid" />
+		<parameter property="departName" />
+		<parameter property="departAddr" />
+		<parameter property="departSortAll" />
+		<parameter property="departState" />
+		<parameter property="departType" />
+		<parameter property="departIsDel" />
+		<parameter property="createDate" />
+	</parameterMap>
+
+	<resultMap type="com.jmsj.sys.entity.Depart" id="resultMap">
+		<result property="departId" column="departId" />
+		<result property="departPid" column="departId" />
+		<result property="departName" column="departName" />
+		<result property="departAddr" column="departAddr" />
+		<result property="departSortAll" column="departSortAll" />
+		<result property="departState" column="departState" />
+		<result property="departType" column="departType" />
+		<result property="departIsDel" column="departIsDel" />
+		<result property="createDate" column="createDate" />
+	</resultMap>
+
+	<insert id="addDepart" parameterMap="parameterMap">
+		insert into
+		tb_depart(departId,departPid,departName,departAddr,departSortAll,departState,departType,departIsDel,createDate)values(?,?,?,?,?,?,?,?,?)
+	</insert>
+
+	<update id="update" parameterMap="parameterMap">
+		update tb_depart set
+		departPid=#{departPid},departName=#{departName},departAddr=#{departAddr},departSortAll=#{departSortAll},departState=#{departState},departType=#{departType},departIsDel=#{departIsDel}
+		where departId=#{departId}
+	</update>
+
+	<update id="delete" parameterType="String">
+		update tb_depart set departIsDel=1 where departId=#{value}
+	</update>
+
+	<select id="getDepartById" resultMap="resultMap" parameterType="String">
+		select * from tb_depart where departId=#{value}
+	</select>
+
+	<select id="getMaxSortAll" resultType="String" parameterType="String">
+		select MAX(departSortAll) from tb_depart where departPid=#{value}
+	</select>
+
+	<select id="findDepartsByPid" resultMap="resultMap"
+		parameterType="String">
+		select * from tb_depart where departPid=#{value} order by departState, departSortAll asc
+	</select>
+	
+	<select id="getDepartByUser" parameterType="String" resultMap="resultMap">
+	 select d.* from tb_depart d, tb_user u where d.departId=u.departId and u.userId=#{value}
+	</select>
+	
+	<select id="getPDepartById" parameterType="String" resultMap="resultMap">
+	select d.* from tb_depart d where d.departId in(select departPid from tb_depart where departId=#{value})
+	</select>
+</mapper>

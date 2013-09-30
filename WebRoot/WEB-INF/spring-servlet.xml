@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!-- springmvc 控制器映射包 -->
+	<context:component-scan base-package="com.jmsj.*.controller" />
+	<!-- 资源文件访问不需要拦截 -->
+	<mvc:resources location="/resource/" mapping="/resource/**" />
+	<mvc:resources location="/modeler/" mapping="/modeler/**" />  
+	<!-- 开启注解映射 -->
+	<mvc:annotation-driven />
+
+	<!-- 数据库配置文件 -->
+	<context:property-placeholder location="classpath:jdbc.properties" />
+
+	<!-- 数据库连接配置 -->
+	<bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName">
+		    <value>${jdbc.driverClassName}</value>
+		</property>
+		<property name="url">
+		    <value>${jdbc.url}</value>
+		</property>
+		<property name="username">
+		    <value>${jdbc.username}</value>
+		</property>
+		<property name="password">
+		    <value>${jdbc.password}</value>
+		</property>
+	</bean>
+	<!-- 初始化mybatissessionFactory -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="myDataSource" />
+	</bean>
+
+	<!-- 初始化mybatis session -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+
+	<!-- mybatis映射文件路径 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.jmsj.*.dao" />
+	</bean>
+
+	<!-- 开始事物管理 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="myDataSource" />
+	</bean>
+
+	<!-- 配置事物管理 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<aop:pointcut id="businessPointcut"
+			expression="execution(* com.jmsj..service..*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="businessPointcut" />
+	</aop:config>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+
+	<!-- spring注解 -->
+	<context:component-scan base-package="com.jmsj.*" />
+
+	<!-- springmvc 返回值映射路径 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!-- 自定义拦截器初始化 -->
+	<mvc:interceptors>
+		<bean class="com.jmsj.sys.interceptor.SessionInterceptor" />
+	</mvc:interceptors>
+
+	<!-- 全局错误处理 -->
+	<bean
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="java.lang.Exception">common/error</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="50000000" />
+	</bean>
+	
+		<!-- activiti配置开始 -->
+	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
+		<property name="customSessionFactories">
+		   <list>  
+            <bean class="com.jmsj.activiti.manager.factory.CustomUserEntityManagerFactory" />  
+            <bean class="com.jmsj.activiti.manager.factory.CustomGroupEntityManagerFactory" />  
+           </list>  
+		</property>
+		<property name="dataSource" ref="myDataSource" />
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="databaseSchemaUpdate" value="true" />
+		<!-- <property name="mailServerHost" value="localhost" />
+		<property name="mailServerPort" value="5025" /> -->
+		<property name="jpaHandleTransaction" value="true" />
+		<property name="jpaCloseEntityManager" value="true" />
+		<property name="jobExecutorActivate" value="false" />
+	</bean>
+  
+	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
+		<property name="processEngineConfiguration" ref="processEngineConfiguration" />
+	</bean>
+  
+	<bean id="repositoryService" factory-bean="processEngine" factory-method="getRepositoryService" />
+	<bean id="runtimeService" factory-bean="processEngine" factory-method="getRuntimeService" />
+	<bean id="taskService" factory-bean="processEngine" factory-method="getTaskService" />
+	<bean id="formService" factory-bean="processEngine" factory-method="getFormService" />
+	<bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService" />
+	<bean id="managementService" factory-bean="processEngine" factory-method="getManagementService" />
+	<bean id="identityService" factory-bean="processEngine" factory-method="getIdentityService" />
+	
+</beans>

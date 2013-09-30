@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"          
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jmsj.sys.dao.IRoleAuthorDao">
+   <parameterMap type="com.jmsj.sys.entity.RoleAuthor" id="parameterMap">
+     <parameter property="raId"/>
+     <parameter property="roleId"/>
+     <parameter property="authId"/>
+   </parameterMap>
+   
+   <resultMap type="com.jmsj.sys.entity.RoleAuthor" id="resultMap">
+     <result column="raId" property="raId"/>
+     <result column="roleId" property="roleId"/>
+     <result column="authId" property="authId"/>
+   </resultMap>
+   
+   <insert id="add" parameterMap="parameterMap">
+    insert into tb_role_author(raId, roleId, authId) values(?,?,?)
+   </insert>
+   
+   <update id="update" parameterMap="parameterMap">
+    update tb_role_author set roleId=#{roleId}, authId=#{authId} where raId=#{raId}
+   </update>
+   
+   <delete id="deleteById" parameterType="String">
+    delete from tb_role_author where raId=#{value}
+   </delete>
+   
+   <delete id="deleteByRoleId" parameterType="String">
+    delete from tb_role_author where roleId=#{value}
+   </delete>
+   
+   <delete id="deleteByAuthorId" parameterType="String">
+    delete from tb_role_author where authId=#{value}
+   </delete>
+   
+   <select id="getRoleAuthorById" parameterType="String" resultMap="resultMap">
+    select * from tb_role_author where raId=#{value}
+   </select>
+
+</mapper>

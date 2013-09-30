@@ -1,0 +1,4 @@
+<packages>
+ <pack>com/jmsj/sys/entity</pack>
+ <pack>com/jmsj/business/entity</pack>
+</packages>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"          
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jmsj.sys.dao.IUserRoleDao">
+	<parameterMap type="com.jmsj.sys.entity.UserRole" id="parameterMap">
+		<parameter property="urId" />
+		<parameter property="userId" />
+		<parameter property="roleId" />
+	</parameterMap>
+	<resultMap type="com.jmsj.sys.entity.UserRole" id="resultMap">
+		<result property="urId" column="urId" />
+		<result property="userId" column="userId" />
+		<result property="roleId" column="roleId" />
+	</resultMap>
+	
+	<insert id="add" parameterMap="parameterMap">
+	 insert into tb_user_role(urId, userId, roleId)values(?,?,?)
+	</insert>
+	
+	<update id="update" parameterMap="parameterMap">
+	 update tb_user_role set userId=#{userId},roleId=#{roleId} where urId=#{urId}
+	</update>
+	
+	<delete id="deleteById" parameterType="String">
+	 delete from tb_user_role where id=#{value}
+	</delete>
+	
+	<delete id="deleteByUserId" parameterType="String">
+	 delete from tb_user_role where userId=#{value}
+	</delete>
+	
+	<delete id="deleteByRoleId" parameterType="String">
+	 delete from tb_user_role where roleId=#{value}
+	</delete>
+	
+	<select id="getUserRoleById" resultMap="resultMap" parameterType="String">
+	 select * from tb_user_role where id=#{value}
+	</select>
+	
+	<select id="getUserRoleByUserId" resultMap="resultMap" parameterType="String">
+	 select * from tb_user_role where userId=#{value}
+	</select>
+	
+	<select id="findAllUserRoles" resultMap="resultMap">
+	 select * from tb_user_role 
+	</select>
+</mapper>

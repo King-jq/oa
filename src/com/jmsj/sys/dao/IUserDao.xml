@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"          
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jmsj.sys.dao.IUserDao">
+	<parameterMap type="com.jmsj.sys.entity.User" id="parameterMap">
+		<parameter property="userId" />
+		<parameter property="userName" />
+		<parameter property="passwd" />
+		<parameter property="departId" />
+		<parameter property="trueName" />
+		<parameter property="age" />
+		<parameter property="isSys" />
+		<parameter property="isDel" />
+		<parameter property="createDate" />
+	</parameterMap>
+	<resultMap type="com.jmsj.sys.entity.User" id="resultMap">
+		<result property="userId" column="userid" />
+		<result property="userName" column="username" />
+		<result property="passwd" column="passwd" />
+		<result property="departId" column="departid" />
+		<result property="trueName" column="truename" />
+		<result property="age" column="age" />
+		<result property="isSys" column="issys" />
+		<result property="isDel" column="isdel" />
+		<result property="createDate" column="createdate" />
+	</resultMap>
+
+	<insert id="addUser" parameterMap="parameterMap">
+		insert into tb_user(userId,
+		userName, passwd, departId, trueName, age,
+		isSys, isDel, createDate)
+		values(?,?,?,?,?,?,?,?,?)
+	</insert>
+
+	<update id="update" parameterMap="parameterMap">
+		update tb_user set
+		departId=#{departId}, trueName=#{trueName}, age=#{age},
+		isSys=#{isSys}, isDel=#{isDel} where userid=#{userId}
+	</update>
+
+	<select id="findListUsers" parameterType="java.util.Map"
+		resultMap="resultMap">
+		select * from tb_user limit #{pageNo}, #{pageNum}
+	</select>
+
+	<select id="login" parameterType="java.util.Map" resultMap="resultMap">
+		select * from tb_user where username=#{userName} and passwd=#{passwd}
+	</select>
+
+	<select id="isHave" parameterType="String" resultMap="resultMap">
+		select * from tb_user where username=#{value}
+	</select>
+
+	<delete id="deleteUser" parameterType="String">
+		delete from
+		tb_user where userid=#{value}
+	</delete>
+
+	<select id="getUser" parameterType="String" resultMap="resultMap">
+		select *
+		from tb_user where userid=#{value}
+	</select>
+
+</mapper> 
+

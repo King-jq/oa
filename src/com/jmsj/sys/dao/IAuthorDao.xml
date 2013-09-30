@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"          
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jmsj.sys.dao.IAuthorDao">
+	<parameterMap type="com.jmsj.sys.entity.Author" id="parameterMap">
+		<parameter property="authId" />
+		<parameter property="authName" />
+		<parameter property="methodName" />
+		<parameter property="className" />
+		<parameter property="authAll"/>
+	</parameterMap>
+	<resultMap type="com.jmsj.sys.entity.Author" id="resultMap">
+		<result property="authId" column="authId" />
+		<result property="authName" column="authName" />
+		<result property="methodName" column="methodName" />
+		<result property="className" column="className" />
+		<result property="authAll" column="authAll"/>
+	</resultMap>
+
+	<insert id="add" parameterMap="parameterMap">
+		insert into tb_author(authId, authName, methodName, className, authAll)
+		values(?,?,?,?,?)
+	</insert>
+
+	<update id="update" parameterMap="parameterMap">
+		update tb_author set authName=#{authName}, methodName=#{mthodName},
+		className=#{className},authAll=#{authAll} where authId=#{authId}
+	</update>
+
+	<delete id="delete" parameterType="String">
+		delete from tb_author where authId=#{value}
+	</delete>
+
+	<select id="getAuthor" parameterType="String" resultMap="resultMap">
+		select * from tb_author where authId=#{value}
+	</select>
+
+</mapper>
