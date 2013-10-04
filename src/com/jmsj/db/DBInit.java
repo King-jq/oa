@@ -127,10 +127,11 @@ public class DBInit {
 				Iterator<Entry<String, String>> values = sqlMaps.entrySet().iterator();
 				boolean isAdd = false;
 				while(values.hasNext()){
-					String value = values.next().getKey();
+					Entry<String, String> entry = values.next();
+					String value = entry.getKey();
 					if(value.indexOf(tName) != -1){
 						isAdd = true;
-						String sql = values.next().getValue();
+						String sql = entry.getValue();
 						create.append(sql).append(",");
 					}
 				}
