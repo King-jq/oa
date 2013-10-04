@@ -55,11 +55,8 @@ public class DBInit {
 		conn = SqlSessionUtils.getSqlSession(session.getSqlSessionFactory(),
 				session.getExecutorType(),
 				session.getPersistenceExceptionTranslator()).getConnection();
-		try {
-			DB_NAME = conn.getSchema();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		DB_NAME = getDBName(conn);
+		
 		if (packs != null && !packs.isEmpty()) {
 			for (String pack : packs) {
 				File file = new File(path + pack);
@@ -124,16 +121,16 @@ public class DBInit {
 					sst.close();
 					rs.close();
 				}
-			}else{
+			}else if(isH == 0 && c.isAnnotationPresent(Entity.class)){
 				StringBuffer create = new StringBuffer();
 				create.append("create table ").append(tName).append("(");
 				Iterator<Entry<String, String>> values = sqlMaps.entrySet().iterator();
 				boolean isAdd = false;
 				while(values.hasNext()){
-					String value = values.next().getValue();
-					if(value.equals(tName)){
+					String value = values.next().getKey();
+					if(value.indexOf(tName) != -1){
 						isAdd = true;
-						String sql = values.next().getKey();
+						String sql = values.next().getValue();
 						create.append(sql).append(",");
 					}
 				}
@@ -200,5 +197,15 @@ public class DBInit {
 				classMaps.remove(c.getName());
 			}
 		}
+	}
+	
+	private static String getDBName(Connection conn){
+		String name = null;
+		try {
+			name = conn.getCatalog();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return name;
 	}
 }
