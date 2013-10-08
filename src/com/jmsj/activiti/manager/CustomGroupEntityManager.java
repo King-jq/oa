@@ -12,6 +12,11 @@ import org.springframework.stereotype.Service;
 import com.jmsj.sys.entity.Depart;
 import com.jmsj.sys.service.IDepartService;
 
+/**
+ * 重写了组管理接口
+ * @author JQ88
+ *
+ */
 @Service("groupEntityManager")
 public class CustomGroupEntityManager extends GroupEntityManager{
 	

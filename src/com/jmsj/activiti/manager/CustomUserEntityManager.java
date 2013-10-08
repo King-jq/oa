@@ -20,6 +20,11 @@ import com.jmsj.sys.entity.Depart;
 import com.jmsj.sys.service.IDepartService;
 import com.jmsj.sys.service.IUserService;
 
+/**
+ * 重写了用户管理接口
+ * @author JQ88
+ *
+ */
 @Service("userEntityManager")
 public class CustomUserEntityManager extends UserEntityManager {
 	
