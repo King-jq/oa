@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.jmsj.sys.dao.IUserDao;
 import com.jmsj.sys.entity.User;
+import com.jmsj.sys.entity.UserDepart;
 
 @Repository("userDao")
 public class UserDaoImpl implements IUserDao{
@@ -54,6 +55,36 @@ public class UserDaoImpl implements IUserDao{
 	@Override
 	public boolean update(User user) {
 		sqlSession.update("update", user);
+		return true;
+	}
+
+	@Override
+	public boolean deleteAll(String departId) {
+		sqlSession.delete("deleteAll", departId);
+		return true;
+	}
+
+	@Override
+	public boolean addUserDepart(UserDepart ud) {
+		sqlSession.insert("addUserDepart", ud);
+		return true;
+	}
+
+	@Override
+	public boolean deleteByUserId(String id) {
+		sqlSession.delete("deleteByUserId", id);
+		return true;
+	}
+
+	@Override
+	public boolean deleteByDepartId(String id) {
+		sqlSession.delete("deleteByDepartId", id);
+		return true;
+	}
+
+	@Override
+	public boolean deleteById(String id) {
+		sqlSession.delete("deleteById", id);
 		return true;
 	}
 }

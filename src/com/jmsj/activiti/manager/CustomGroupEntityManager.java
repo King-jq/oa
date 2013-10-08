@@ -47,10 +47,12 @@ public class CustomGroupEntityManager extends GroupEntityManager{
 	@Override
 	public List<Group> findGroupsByUser(String userId) {
 		List<Group> groups = null;
-		Depart depart = departService.getDepartByUser(userId);
-		if(depart != null){
-			groups = new ArrayList<Group>(1);
-			groups.add(depart);
+		List<Depart> departs = departService.getDepartByUser(userId);
+		if(departs != null && !departs.isEmpty()){
+			groups = new ArrayList<Group>(5);
+			for(Depart d: departs){
+				groups.add(d);
+			}
 		}
 		return groups;
 	}

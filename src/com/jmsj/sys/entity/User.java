@@ -9,32 +9,45 @@ import com.jmsj.sys.annotation.Column;
 import com.jmsj.sys.annotation.Entity;
 import com.jmsj.sys.annotation.Id;
 import com.jmsj.sys.annotation.Table;
+/**
+ * 用户信息表
+ * @author JQ88
+ *
+ */
 @Entity
 @Table("tb_user")
 public class User extends UserEntity{
 
 	private static final long serialVersionUID = 1L;
 	
+	//主键
 	@Id
 	@Column(name="userId",length=40)
 	private String userId;
+	//用户名
 	@Column(name="userName",length=100)
     private String userName;
+	//用户密码
 	@Column(name="passwd",length=40)
     private String passwd;
+	//真实姓名
 	@Column(name="trueName", length=100)
     private String trueName;
-	@Column(name="departId",length=40)
-    private String departId;
+	//年龄
 	@Column(name="age",length=3)
     private int age;
+	//是否已经删除
 	@Column(name="isDel",length=2)
     private int isDel;
+	//是否是管理员用户
 	@Column(name="isSys",length=2)
     private int isSys;
+	//创建时间
 	@Column(name="createDate",length=6)
     private Date createDate;
-
+	//登陆机构
+	private Depart depart;
+	
     public String getUserId() {
         return userId;
     }
@@ -66,15 +79,7 @@ public class User extends UserEntity{
     public void setTrueName(String value) {
         this.trueName = value;
     }
-
-    public String getDepartId() {
-        return departId;
-    }
-
-    public void setDepartId(String value) {
-        this.departId = value;
-    }
-
+    
     public int getAge() {
         return age;
     }
@@ -153,6 +158,14 @@ public class User extends UserEntity{
 
 	@Override
 	public void setPassword(String password) {
+	}
+
+	public Depart getDepart() {
+		return depart;
+	}
+
+	public void setDepart(Depart depart) {
+		this.depart = depart;
 	}
 
 }

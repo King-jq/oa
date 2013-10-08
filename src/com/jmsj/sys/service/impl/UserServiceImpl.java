@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.jmsj.sys.dao.IUserDao;
 import com.jmsj.sys.entity.User;
+import com.jmsj.sys.entity.UserDepart;
 import com.jmsj.sys.service.IUserService;
 import com.jmsj.util.MD5;
 
@@ -21,16 +22,22 @@ public class UserServiceImpl implements IUserService {
 	@Resource
 	private IUserDao userDao;
 	
-	public boolean add(User user){
+	public boolean add(User user, String departId){
 		MD5 md5 = new MD5();
 		StringBuffer sb = new StringBuffer(md5.getMD5ofStr(md5.getMD5ofStr(user.getPasswd())));
 		user.setUserId(UUID.randomUUID().toString().toUpperCase().replace("-", ""));
 		user.setPasswd(md5.getMD5ofStr(md5.getMD5ofStr(sb.reverse().toString())));
 		user.setCreateDate(new Date());
+		UserDepart ud = new UserDepart();
+		ud.setUdId(UUID.randomUUID().toString().toUpperCase().replace("-", ""));
+		ud.setUserId(user.getUserId());
+		ud.setDepartId(departId);
+		userDao.addUserDepart(ud);
 		return userDao.add(user);
 	}
 
 	public boolean delete(String id) {
+		userDao.deleteByUserId(id);
 		return userDao.delete(id);
 	}
 
@@ -49,8 +56,6 @@ public class UserServiceImpl implements IUserService {
 		maps.put("userName", userName);
 		maps.put("passwd", newPasswd);
 		User user = userDao.login(maps);
-		if(user == null) return user;
-		user.setPasswd(passwd);
 		return user;
 	}
 

@@ -104,7 +104,7 @@ public class ProcessServiceImpl implements IProcessService{
 
 	@Override
 	public void signTask(String taskId, User user) {
-		taskService.claim(taskId, user.getDepartId());
+		taskService.claim(taskId, user.getDepart().getDepartId());
 	}
 
 	@Override

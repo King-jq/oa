@@ -80,9 +80,9 @@ public class DepartDaoImpl implements IDepartDao {
 	}
 
 	@Override
-	public Depart getDepartByUser(String userId) {
+	public List<Depart> getDepartByUser(String userId) {
 		try{
-			return sqlSession.selectOne("getDepartByUser", userId);
+			return sqlSession.selectList("getDepartByUser", userId);
 		}catch(Exception e){
 			e.printStackTrace();
 			return null;

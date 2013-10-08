@@ -55,7 +55,7 @@
 	</select>
 	
 	<select id="getDepartByUser" parameterType="String" resultMap="resultMap">
-	 select d.* from tb_depart d, tb_user u where d.departId=u.departId and u.userId=#{value}
+	 select d.* from tb_depart d, tb_user_depart u where d.departId=u.departId and u.userId=#{value}
 	</select>
 	
 	<select id="getPDepartById" parameterType="String" resultMap="resultMap">

@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.jmsj.sys.entity.Depart;
 import com.jmsj.sys.entity.Json;
 import com.jmsj.sys.entity.User;
 import com.jmsj.sys.exception.UserException;
+import com.jmsj.sys.service.IDepartService;
 import com.jmsj.sys.service.IUserService;
 
 @Controller
@@ -27,6 +29,8 @@ public class UserController {
 	private IUserService userService;
 	@Resource(name="repositoryService")
 	private RepositoryService repositoryService;
+	@Resource(name="departService")
+	private IDepartService departService;
 	//列表每页显示的数量
 	private Integer pageNum = 10;
 	
@@ -56,19 +60,19 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value="/add", method=RequestMethod.POST)
-	public String add(Model model, User user,@RequestParam("file")MultipartFile file){
+	public String add(Model model, String departId, User user,@RequestParam("file")MultipartFile file){
 		
 		User u = userService.isHave(user.getUserName());
 		
 		if(u != null){
-			model.addAttribute("departId", user.getDepartId());
+			model.addAttribute("departId", departId);
 			return "user/addUser";
 		}
 		
-		if(user.getDepartId() == null || "".equals(user.getDepartId())){
+		if(departId==null || "".equals(departId)){
 			return "redirect:/depart/list";
 		}
-		userService.add(user);
+		userService.add(user, departId);
 		return "redirect:/depart/list";
 	}
 	
@@ -87,6 +91,12 @@ public class UserController {
 		User user = userService.login(userName, passwd);
 		if(user == null) throw new UserException("账号或密码错误!");
 		session.setAttribute("user", user);
+		List<Depart> departs = departService.getDepartByUser(user.getUserId());
+		if(departs != null && departs.size() > 1){
+			session.setAttribute("departs", departs);
+			return "";
+		}
+		user.setDepart(departs.get(0));
 		return "redirect:/user/index";
 	}
 	

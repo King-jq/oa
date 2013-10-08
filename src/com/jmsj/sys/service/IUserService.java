@@ -9,7 +9,7 @@ import com.jmsj.sys.entity.User;
 public interface IUserService {
 
 
-    public boolean add(User user);
+    public boolean add(User user, String departId);
 
     public boolean delete(String id);
     

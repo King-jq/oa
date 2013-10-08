@@ -86,7 +86,7 @@ public class ProcessController {
 			pageNum = BaseUtil.PAGE_NUM;
 		}
 		User user = (User) session.getAttribute("user");
-		PageObject<Task> tasks = processService.findTasksByUser(user.getDepartId(), pageNum, BaseUtil.PAGE_NO);
+		PageObject<Task> tasks = processService.findTasksByUser(user.getDepart().getDepartId(), pageNum, BaseUtil.PAGE_NO);
 		model.addAttribute("tasks", tasks);
 		return "process/taskProcess";
 	}

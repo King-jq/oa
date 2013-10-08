@@ -69,7 +69,7 @@ public class DepartServiceImpl implements IDepartService {
 	}
 
 	@Override
-	public Depart getDepartByUser(String userId) {
+	public List<Depart> getDepartByUser(String userId) {
 		return departDao.getDepartByUser(userId);
 	}
 

@@ -43,7 +43,7 @@ public class DepartController {
 	@RequestMapping(value="/list",method=RequestMethod.GET)
 	public String listDeparts(Model model, HttpSession session){
 		User user = (User) session.getAttribute("user");
-		Depart depart = departService.getDepartById(user.getDepartId());
+		Depart depart = departService.getDepartById(user.getDepart().getDepartId());
 		StringBuffer tree = new StringBuffer();
 		tree.append("[{");
 		if(depart != null){
@@ -63,7 +63,7 @@ public class DepartController {
 		StringBuffer tree = new StringBuffer();
 		if(pid == null){
 			User user = (User) session.getAttribute("user");
-			Depart depart = departService.getDepartById(user.getDepartId());
+			Depart depart = departService.getDepartById(user.getDepart().getDepartId());
 			tree.append("[{");
 			if(depart != null){
 				tree.append("\"id\":\"").append(depart.getDepartId()).append("\",");

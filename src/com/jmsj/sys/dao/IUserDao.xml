@@ -13,6 +13,11 @@
 		<parameter property="isDel" />
 		<parameter property="createDate" />
 	</parameterMap>
+	<parameterMap type="com.jmsj.sys.entity.UserDepart" id="parameterMapUD">
+	    <parameter property="udId"/>
+		<parameter property="userId" />
+		<parameter property="departId"/>
+	</parameterMap>
 	<resultMap type="com.jmsj.sys.entity.User" id="resultMap">
 		<result property="userId" column="userid" />
 		<result property="userName" column="username" />
@@ -60,6 +65,21 @@
 		select *
 		from tb_user where userid=#{value}
 	</select>
-
+	
+	<insert id="addUserDepart" parameterMap="parameterMapUD">
+	    insert into tb_user_deaprt(udId, userId, departId)values(?,?,?)
+	</insert>
+	<delete id="deleteAll" parameterType="String">
+	    delete from tb_user where userid in(select userid fron tb_user_deaprt where departid=#{value})
+	</delete>
+	<delete id="deleteUserId" parameterType="String">
+	    delete from tb_user_deaprt where userid=#{value}
+	</delete>
+	<delete id="deleteDepartId" parameterType="String">
+	    delete from tb_user_deaprt where departid=#{value}
+	</delete>
+	<delete id="deleteId" parameterType="String">
+	    delete from tb_user_deaprt where udid=#{value}
+	</delete>
 </mapper> 
 

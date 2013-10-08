@@ -45,11 +45,13 @@ public class CustomUserEntityManager extends UserEntityManager {
 
 	@Override
 	public List<Group> findGroupsByUser(String userId) {
-		Depart depart = departService.getDepartByUser(userId);
 		List<Group> groups = null;
-		if(depart != null){
-			groups = new ArrayList<Group>(1);
-			groups.add(depart);
+		List<Depart> departs = departService.getDepartByUser(userId);
+		if(departs != null && !departs.isEmpty()){
+			groups = new ArrayList<Group>(5);
+			for(Depart d: departs){
+				groups.add(d);
+			}
 		}
 		return groups;
 	}

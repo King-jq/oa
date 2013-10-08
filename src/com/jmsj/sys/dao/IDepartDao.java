@@ -33,7 +33,7 @@ public interface IDepartDao {
 	
 	public List<Depart> findDepartsByPid(String pid);
 
-	public Depart getDepartByUser(String userId);
+	public List<Depart> getDepartByUser(String userId);
 	
 	public Depart getPDepartById(String departId);
 }

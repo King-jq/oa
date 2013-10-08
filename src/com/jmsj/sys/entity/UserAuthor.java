@@ -9,12 +9,14 @@ import com.jmsj.sys.annotation.Table;
 @Entity
 @Table("tb_user_author")
 public class UserAuthor {
-	
+	//主键id
 	@Id
 	@Column(name="uaId",length=40)
 	private String uaId;
+	//用户id
 	@Column(name="userId",length=40)
 	private String userId;
+	//权限id
 	@Column(name="authId",length=40)
 	private String authId;
 	

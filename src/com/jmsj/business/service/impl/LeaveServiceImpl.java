@@ -35,8 +35,8 @@ public class LeaveServiceImpl implements ILeaveService {
 		int day = DateUtil.dateToDay(leave.getStartDate(), leave.getEndDate());
 		Map<String, Object> values = new HashMap<String, Object>();
 		values.put("number", new Integer(day));
-		values.put("departId", user.getDepartId());
-		ProcessInstance pi = processService.startProcessInstanceByKey(key, lid, values, user.getDepartId());
+		values.put("departId", user.getDepart().getDepartId());
+		ProcessInstance pi = processService.startProcessInstanceByKey(key, lid, values, user.getDepart().getDepartId());
 		leave.setProId(pi.getProcessInstanceId());
 		if(!leaveDao.save(leave)){
 			processService.deleteProcessInstanceById(pi.getProcessInstanceId());

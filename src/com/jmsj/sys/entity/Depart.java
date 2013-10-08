@@ -10,29 +10,43 @@ import com.jmsj.sys.annotation.Entity;
 import com.jmsj.sys.annotation.Id;
 import com.jmsj.sys.annotation.Table;
 
+/**
+ * 机构表
+ * @author JQ88
+ *
+ */
 @Entity
 @Table("tb_depart")
 public class Depart implements Group{
 	
 	private static final long serialVersionUID = 1L;
 	
+	//主键id
 	@Id
 	@Column(name="departId",length=40)
 	private String departId;
+	//父id
 	@Column(name="departPid",length=40)
     private String departPid;
+	//机构名称
 	@Column(name="departName",length=200)
     private String departName;
+	//机构地址
 	@Column(name="departAddr",length=250)
     private String departAddr;
+	//机构排序
 	@Column(name="departSortAll",length=200)
     private String departSortAll;
+	//机构状态
 	@Column(name="departState",length=2)
     private int departState;
+	//机构类型
 	@Column(name="departType",length=2)
     private int departType;
+	//机构是否被删除
 	@Column(name="departIsDel",length=2)
     private int departIsDel;
+	//创建时间
 	@Column(name="createDate",length=6)
     private Date createDate;
 

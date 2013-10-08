@@ -10,11 +10,14 @@ import com.jmsj.sys.annotation.Table;
 @Table("tb_role_author")
 public class RoleAuthor {
 	
+	//主键id
 	@Id
 	@Column(name="raId", length=40)
 	private String raId;
+	//角色id
 	@Column(name="roleId", length=40)
 	private String roleId;
+	//权限id
 	@Column(name="authId", length=40)
 	private String authId;
 	

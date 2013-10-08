@@ -13,8 +13,10 @@ public class UserRole {
 	@Id
 	@Column(name="urId",length=40)
 	private String urId;
+	//用户id
 	@Column(name="userId",length=40)
 	private String userId;
+	//角色id
 	@Column(name="roleId",length=40)
 	private String roleId;
 	
