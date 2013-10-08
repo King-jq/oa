@@ -6,7 +6,6 @@
 		<parameter property="userId" />
 		<parameter property="userName" />
 		<parameter property="passwd" />
-		<parameter property="departId" />
 		<parameter property="trueName" />
 		<parameter property="age" />
 		<parameter property="isSys" />
@@ -22,7 +21,6 @@
 		<result property="userId" column="userid" />
 		<result property="userName" column="username" />
 		<result property="passwd" column="passwd" />
-		<result property="departId" column="departid" />
 		<result property="trueName" column="truename" />
 		<result property="age" column="age" />
 		<result property="isSys" column="issys" />
@@ -32,14 +30,14 @@
 
 	<insert id="addUser" parameterMap="parameterMap">
 		insert into tb_user(userId,
-		userName, passwd, departId, trueName, age,
+		userName, passwd, trueName, age,
 		isSys, isDel, createDate)
-		values(?,?,?,?,?,?,?,?,?)
+		values(?,?,?,?,?,?,?,?)
 	</insert>
 
 	<update id="update" parameterMap="parameterMap">
 		update tb_user set
-		departId=#{departId}, trueName=#{trueName}, age=#{age},
+		trueName=#{trueName}, age=#{age},
 		isSys=#{isSys}, isDel=#{isDel} where userid=#{userId}
 	</update>
 
