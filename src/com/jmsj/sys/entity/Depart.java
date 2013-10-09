@@ -1,6 +1,7 @@
 
 package com.jmsj.sys.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import org.activiti.engine.identity.Group;
@@ -17,7 +18,7 @@ import com.jmsj.sys.annotation.Table;
  */
 @Entity
 @Table("tb_depart")
-public class Depart implements Group{
+public class Depart implements Group, Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	

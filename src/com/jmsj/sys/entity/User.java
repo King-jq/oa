@@ -1,6 +1,7 @@
 
 package com.jmsj.sys.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import org.activiti.engine.impl.persistence.entity.UserEntity;
@@ -16,7 +17,7 @@ import com.jmsj.sys.annotation.Table;
  */
 @Entity
 @Table("tb_user")
-public class User extends UserEntity{
+public class User extends UserEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	

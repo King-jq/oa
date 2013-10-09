@@ -45,4 +45,6 @@
         <servlet-name>RestletServlet</servlet-name>  
         <url-pattern>/modeler/service/*</url-pattern>  
     </servlet-mapping>  
+    <!-- 允许session复制 -->
+    <distributable />
 </web-app>
