@@ -96,7 +96,6 @@ public class UserController {
 			session.setAttribute("departs", departs);
 			return "";
 		}
-		user.setDepart(departs.get(0));
 		return "redirect:/user/index";
 	}
 	
@@ -115,8 +114,12 @@ public class UserController {
 			json.setState(false);
 		}else{
 			session.setAttribute("user", user);
+			List<Depart> departs = departService.getDepartByUser(user.getUserId());
+			if(departs != null && departs.size() > 1){
+				session.setAttribute("departs", departs);
+				json.setObject(departs);
+			}
 			json.setState(true);
-			json.setObject(user);
 		}
 		return json;
 	}

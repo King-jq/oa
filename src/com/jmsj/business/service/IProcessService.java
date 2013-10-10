@@ -95,4 +95,18 @@ public interface IProcessService {
 	 * @param piId
 	 */
 	public void activitiProcessInstance(String piId, User user);
+	
+	/**
+	 * 通过流程定义的key，获取流程定于图片资源
+	 * @param key
+	 * @return
+	 */
+	public InputStream getProcessDefinitionImageByKey(String key);
+	
+	/**
+	 * 通过流程定义的id，获取流程定于图片资源
+	 * @param key
+	 * @return
+	 */
+	public InputStream getProcessDefinitionImageById(String id);
 }

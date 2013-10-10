@@ -122,7 +122,7 @@
 		<property name="mailServerPort" value="5025" /> -->
 		<property name="jpaHandleTransaction" value="true" />
 		<property name="jpaCloseEntityManager" value="true" />
-		<property name="jobExecutorActivate" value="false" />
+		<property name="jobExecutorActivate" value="true" />
 	</bean>
   
 	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">

@@ -56,7 +56,11 @@
 				if(!msg.state){
 					$.messager.alert('登录失败',"密码或用户名错误!");
 				}else{
-					window.location='<%=basePath%>user/index';
+					if(msg.object != null){
+						
+					}else{
+						window.location='<%=basePath%>user/index';
+					}
 				}
 			},
 			error:function(msg){
@@ -84,6 +88,17 @@
       </table>
     </div>
     
+    <div id="departsDiv" title="选择机构" style="width:270px;height:150px;top:100px">
+       <table>
+       <tr>
+         <td><th>机构:</th></td>
+         <td>
+            <select id="departs" class="easyui-combobox" name="state" style="width:200px;">
+            </select>
+         </td>
+       </tr>
+      </table>
+    </div>
    
 </body>
 </html>

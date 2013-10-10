@@ -127,4 +127,18 @@ public class ProcessServiceImpl implements IProcessService{
 		runtimeService.activateProcessInstanceById(piId);
 	}
 
+	@Override
+	public InputStream getProcessDefinitionImageByKey(String key) {
+		ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().processDefinitionKey(key).singleResult();
+		String imageName = pd.getDiagramResourceName();
+		return repositoryService.getResourceAsStream(pd.getDeploymentId(), imageName);
+	}
+
+	@Override
+	public InputStream getProcessDefinitionImageById(String id) {
+		ProcessDefinition pd = repositoryService.getProcessDefinition(id);
+		String imageName = pd.getDiagramResourceName();
+		return repositoryService.getResourceAsStream(pd.getDeploymentId(), imageName);
+	}
+
 }
